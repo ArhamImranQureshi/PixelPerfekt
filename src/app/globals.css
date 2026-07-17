@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-inter: "Inter", system-ui, sans-serif;
+    --font-poppins: "Poppins", sans-serif;
+    --font-noto-sans: "Noto Sans", sans-serif;
+    --font-jersey: "Jersey 10", monospace;
+  }
+
+  
+
+  body {
+    font-family: var(--font-inter);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #2CB6C0 transparent;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: #2CB6C0;
+  --color-primary-dark: #2299a3;
+  --color-secondary: #5D5C5C;
+  --color-muted: #7C7C7C;
+  --color-dark: #191818;
+  --color-dark2: #1A1919;
+  --color-accent: #f59e0b;
+  --font-sans: var(--font-inter);
+  --font-poppins: var(--font-poppins);
+  --font-noto: var(--font-noto-sans);
+  --font-jersey: var(--font-jersey);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f8fafc;
+  }
+}
+
+html {
+  /* Removed scroll-behavior: smooth from html root to prevent scroll jank.
+     Smooth scrolling is applied via JS only for anchor link clicks. */
+  scroll-behavior: auto;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  /* Prevent subpixel text jank during animations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =====================================================
+   HERO BACKGROUND COLUMN STRIPS
+   GPU-composited: will-change + translateZ(0) forces
+   these onto their own compositor layer so they never
+   trigger main-thread paint or layout recalculations.
+   ===================================================== */
+.strip {
+  /* Promote to GPU layer */
+  will-change: transform;
+  transform: translateZ(0);
+  /* Isolate paint so strip redraws don't cascade */
+  contain: layout style;
+  /* Prevent subpixel rendering jitter */
+  backface-visibility: hidden;
+}
+
+.strip.col-up {
+  animation: stripUp 22s linear infinite;
+}
+
+.strip.col-down {
+  animation: stripDown 22s linear infinite;
+  transform: translateZ(0) translateY(-50%);
+}
+
+@keyframes stripUp {
+  from { transform: translateZ(0) translateY(0); }
+  to   { transform: translateZ(0) translateY(-50%); }
+}
+
+@keyframes stripDown {
+  from { transform: translateZ(0) translateY(-50%); }
+  to   { transform: translateZ(0) translateY(0); }
+}
+
+/* Marquee text — also GPU-composited */
+.animate-\[marquee_18s_linear_infinite\] {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Respect user's reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .strip,
+  .strip.col-up,
+  .strip.col-down {
+    animation: none !important;
+    transform: none !important;
+  }
+  .animate-\[marquee_18s_linear_infinite\] {
+    animation: none !important;
+  }
+}
