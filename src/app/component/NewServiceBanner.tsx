@@ -6,9 +6,52 @@ import { gsap } from "gsap";
 
 
 
-const MARQUEE_WORDS = ["tech", "tech", "tech", "tech", "tech", "tech"];
 
-export default function NewServiceBanner() {
+
+export default function NewServiceBanner({
+  service,
+}: NewServiceBannerProps) {
+  const bannerContent = {
+  "web-branding": {
+    title1: "Design,",
+     marquee: ["Branding", "Branding", "Branding", "Branding"],
+    title2: "that grows businesses",
+
+    description:
+      "We build memorable brands that connect with your audience.",
+
+    heartImage: "/images/Heart.webp",
+    helmetImage: "/images/helmet.webp",
+    shapeImage: "/images/boxi.webp",
+  },
+
+  seo: {
+    title1: "Grow,",
+     marquee: ["SEO", "SEO", "SEO", "SEO"],
+    title2: "your rankings",
+
+    description:
+      "Increase your organic traffic with our SEO services.",
+
+    heartImage: "/images/seo-heart.webp",
+    helmetImage: "/images/seo-helmet.webp",
+    shapeImage: "/images/seo-box.webp",
+  },
+
+  "app-development": {
+    title1: "Build,",
+     marquee: ["Apps", "Apps", "Apps", "Apps"],
+    title2: "that users love",
+
+    description:
+      "High performance Android & iOS applications.",
+
+    heartImage: "/images/app-heart.webp",
+    helmetImage: "/images/app-helmet.webp",
+    shapeImage: "/images/app-box.webp",
+  },
+};
+const data = bannerContent[service];
   const sectionRef = useRef<HTMLElement>(null);
   const brainRef = useRef<HTMLDivElement>(null);
   const helmetRef = useRef<HTMLDivElement>(null);
@@ -19,7 +62,10 @@ export default function NewServiceBanner() {
   const videoCardRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
   const parallaxRefs = useRef<HTMLDivElement[]>([]);
-
+  const MARQUEE_WORDS = data.marquee;
+interface NewServiceBannerProps {
+  service: "web-branding" | "seo" | "app-development";
+}
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Smooth entrance / hero title fade up
@@ -155,7 +201,7 @@ export default function NewServiceBanner() {
       >
         <div ref={brainRef} className="w-full h-full">
           <Image
-            src="../images/Heart.webp"
+            src={data.heartImage}
             alt="Brain"
             width={400}
             height={400}
@@ -172,7 +218,7 @@ export default function NewServiceBanner() {
       >
         <div ref={helmetRef} className="w-full h-full">
           <Image
-            src="/images/helmet.webp"
+            src={data.helmetImage}
             alt="Helmet"
             width={200}
             height={200}
@@ -189,7 +235,7 @@ export default function NewServiceBanner() {
       >
         <div ref={shapeRef} className="w-full h-full">
           <Image
-            src="/images/boxi.webp"
+            src={data.shapeImage}
             alt="Abstract shape"
             width={200}
             height={200}
@@ -206,7 +252,7 @@ export default function NewServiceBanner() {
       >
         <h1 className="w-full text-center font-normal text-white leading-[0.95] tracking-tight text-[13vw] sm:text-[9vw] md:text-[7.5vw] lg:text-[6.5vw] flex flex-col items-center">
           <span className="flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-6 w-full">
-            <span>Design,</span>
+            <span>{data.title1}</span>
             {/* Marquee pill inline with first line */}
             <span className="relative inline-flex h-[0.99em] sm:h-[0.99em] items-center overflow-hidden rounded-full bg-[#2CB6C0] px-4 sm:px-6 align-middle max-w-[38%] sm:max-w-[34%]">
               <div
@@ -306,10 +352,7 @@ export default function NewServiceBanner() {
           className="text-white order-2 sm:order-3 shrink-0 max-w-md"
         >
           <p className="text-sm sm:text-base text-white/80 leading-relaxed">
-            We create modern digital experiences that help businesses grow. Our
-            focus is on delivering high-quality web solutions with clean design,
-            seamless performance, and user-friendly interfaces that leave a
-            lasting impression.
+            {data.description}
           </p>
         </div>
       </div>

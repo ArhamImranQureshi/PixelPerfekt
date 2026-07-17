@@ -28,8 +28,8 @@ export default function BrandingPage() {
       <BrandingCTA />
       <BrandingFAQ />
       <BrandingContact /> */}
-      <NewServiceBanner/>
-      <ParallaxImage/>
+      <NewServiceBanner service="web-branding" />
+      <ParallaxImage service="web-branding" />
     <AboutReveal/>
     <FeaturedProjects/>
     <Portfolio 

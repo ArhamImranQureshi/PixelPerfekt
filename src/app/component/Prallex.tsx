@@ -7,9 +7,33 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function ParallaxImage() {
+interface ParallaxImageProps {
+  service: "web-branding" | "seo" | "app-development";
+}
+
+export default function ParallaxImage({
+  service,
+}: ParallaxImageProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+
+  // 👇 Component ka data
+  const parallaxData = {
+    "web-branding": {
+      image: "/images/paralex.webp",
+    },
+
+    seo: {
+      image: "/images/seo/parallax.webp",
+    },
+
+    "app-development": {
+      image: "/images/app-development/parallax.webp",
+    },
+  };
+
+  // 👇 Dynamic data
+  const data = parallaxData[service];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -42,12 +66,9 @@ export default function ParallaxImage() {
       className="h-[90vh] flex items-center justify-center bg-[#151515]"
     >
       <div className="relative w-[90%] h-[90vh] overflow-hidden rounded-3xl">
-        <div
-          ref={imageRef}
-          className="absolute inset-0"
-        >
+        <div ref={imageRef} className="absolute inset-0">
           <Image
-            src="/images/paralex.webp"
+            src={data.image}
             alt="Parallax"
             fill
             priority

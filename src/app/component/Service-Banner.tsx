@@ -20,10 +20,32 @@ import { Moon, ArrowUpRight, Menu, Sparkles, Play } from "lucide-react";
  * Until then, CSS placeholders (gradient blobs) are used so the layout
  * still renders correctly.
  */
+type ServiceName = "web-branding" | "seo" | "app-development";
 
-export default function SericeBanner() {
+interface ServiceBannerProps {
+  service: ServiceName;
+}
+
+export default function ServiceBanner({ service }: ServiceBannerProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const bannerData = {
+    "web-branding": {
+      title: "Web Branding",
+      description:
+        "We create memorable brands that connect with your audience.",
+    },
 
+    seo: {
+      title: "SEO Optimization",
+      description: "Rank higher on Google and grow your organic traffic.",
+    },
+
+    "app-development": {
+      title: "App Development",
+      description: "Build fast, secure and scalable mobile applications.",
+    },
+  };
+  const data = bannerData[service];
   return (
     <section className="relative w-full bg-[#F7F4EF] overflow-hidden">
       {/* top accent bar (right side, like the screenshot) */}
@@ -31,6 +53,9 @@ export default function SericeBanner() {
 
       {/* NAV */}
       <nav className="relative z-20 flex items-center justify-between px-6 md:px-12 py-6">
+        <h2 className="text-4xl font-bold text-center">{data.title}</h2>
+
+        <p className="text-center">{data.description}</p>
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-full bg-black">
             <span className="text-white text-lg">👾</span>
@@ -100,11 +125,21 @@ export default function SericeBanner() {
           <span className="block">
             Design,{" "}
             <span className="relative inline-flex items-center gap-3 rounded-full bg-[#8878F5] px-6 text-white align-middle">
-              tech <Sparkles className="h-[0.55em] w-[0.55em]" fill="white" strokeWidth={0} /> te
+              tech{" "}
+              <Sparkles
+                className="h-[0.55em] w-[0.55em]"
+                fill="white"
+                strokeWidth={0}
+              />{" "}
+              te
             </span>
           </span>
           <span className="mt-2 flex items-center justify-center md:justify-start gap-4">
-            <Sparkles className="h-[0.5em] w-[0.5em] shrink-0" fill="black" strokeWidth={0} />
+            <Sparkles
+              className="h-[0.5em] w-[0.5em] shrink-0"
+              fill="black"
+              strokeWidth={0}
+            />
             and some magic
           </span>
         </h1>
@@ -120,15 +155,19 @@ export default function SericeBanner() {
 
           {/* description */}
           <p className="text-black/70 text-base leading-relaxed md:col-span-1">
-            We are a creative digital agency specializing in innovative
-            design and cutting-edge development.
+            We are a creative digital agency specializing in innovative design
+            and cutting-edge development.
           </p>
 
           {/* social links */}
           <ul className="flex flex-col gap-2 text-sm font-medium text-black">
             {["Dribbble", "Behance", "Instagram"].map((label) => (
               <li key={label} className="flex items-center gap-2">
-                <Sparkles className="h-3.5 w-3.5" fill="black" strokeWidth={0} />
+                <Sparkles
+                  className="h-3.5 w-3.5"
+                  fill="black"
+                  strokeWidth={0}
+                />
                 <a href="#" className="hover:underline underline-offset-4">
                   {label}
                 </a>
