@@ -1,16 +1,27 @@
 "use client";
-
+import { servicesData } from "@/data/service";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 
 gsap.registerPlugin(ScrollTrigger);
+interface AboutRevealProps {
+  service:
+    | "branding-design"
+    | "web-development"
+    | "app-development"
+    | "content-writing"
+    | "social-media-marketing"
+    | "seo";
+}
 
-export default function AboutReveal() {
+export default function AboutReveal({
+  service,
+}: AboutRevealProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
-
+const data = servicesData[service].about;
   useEffect(() => {
     if (!paragraphRef.current) return;
 
@@ -49,11 +60,11 @@ export default function AboutReveal() {
       <div>
         <p className="text-white text-lg flex items-center gap-2 mb-10">
           <span>✦</span>
-          <span>Branding Design</span>
+          <span>{data.badge}</span>
         </p>
 
         <h2 className="text-white text-4xl md:text-5xl lg:text-6xl font-medium leading-tight">
-          Unleashing the Power of Your Brand
+          {data.title}
         </h2>
       </div>
 
@@ -63,7 +74,7 @@ export default function AboutReveal() {
           ref={paragraphRef}
           className="text-[18px] md:text-[20px] lg:text-[24px] leading-[1.7] font-medium"
         >
-          In today's competitive marketplace, your brand is more than just a logo. It's the essence of your company's identity. We understand that a strong brand is the foundation of a successful business. Our comprehensive branding and identity services are designed to help you establish a robust, cohesive brand that resonates with your target audience and sets you apart from the competition.
+          {data.description}
         </p>
       </div>
 

@@ -1,5 +1,5 @@
 "use client";
-
+import { servicesData } from "@/data/service";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
@@ -7,34 +7,18 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+
 interface ParallaxImageProps {
-  service: "web-branding" | "seo" | "app-development";
+  service: ServiceType;
 }
 
 export default function ParallaxImage({
   service,
 }: ParallaxImageProps) {
+  
   const sectionRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-
-  // 👇 Component ka data
-  const parallaxData = {
-    "web-branding": {
-      image: "/images/paralex.webp",
-    },
-
-    seo: {
-      image: "/images/seo/parallax.webp",
-    },
-
-    "app-development": {
-      image: "/images/app-development/parallax.webp",
-    },
-  };
-
-  // 👇 Dynamic data
-  const data = parallaxData[service];
-
+const data = servicesData[service].parallax;
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(

@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
-
+import { servicesData } from "@/data/service";
 
 
 
@@ -11,47 +11,7 @@ import { gsap } from "gsap";
 export default function NewServiceBanner({
   service,
 }: NewServiceBannerProps) {
-  const bannerContent = {
-  "web-branding": {
-    title1: "Design,",
-     marquee: ["Branding", "Branding", "Branding", "Branding"],
-    title2: "that grows businesses",
-
-    description:
-      "We build memorable brands that connect with your audience.",
-
-    heartImage: "/images/Heart.webp",
-    helmetImage: "/images/helmet.webp",
-    shapeImage: "/images/boxi.webp",
-  },
-
-  seo: {
-    title1: "Grow,",
-     marquee: ["SEO", "SEO", "SEO", "SEO"],
-    title2: "your rankings",
-
-    description:
-      "Increase your organic traffic with our SEO services.",
-
-    heartImage: "/images/seo-heart.webp",
-    helmetImage: "/images/seo-helmet.webp",
-    shapeImage: "/images/seo-box.webp",
-  },
-
-  "app-development": {
-    title1: "Build,",
-     marquee: ["Apps", "Apps", "Apps", "Apps"],
-    title2: "that users love",
-
-    description:
-      "High performance Android & iOS applications.",
-
-    heartImage: "/images/app-heart.webp",
-    helmetImage: "/images/app-helmet.webp",
-    shapeImage: "/images/app-box.webp",
-  },
-};
-const data = bannerContent[service];
+  const data = servicesData[service].banner;
   const sectionRef = useRef<HTMLElement>(null);
   const brainRef = useRef<HTMLDivElement>(null);
   const helmetRef = useRef<HTMLDivElement>(null);
@@ -63,9 +23,9 @@ const data = bannerContent[service];
   const socialRef = useRef<HTMLDivElement>(null);
   const parallaxRefs = useRef<HTMLDivElement[]>([]);
   const MARQUEE_WORDS = data.marquee;
-interface NewServiceBannerProps {
-  service: "web-branding" | "seo" | "app-development";
-}
+  interface NewServiceBannerProps {
+    service: ServiceType;
+  }
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Smooth entrance / hero title fade up
@@ -278,7 +238,7 @@ interface NewServiceBannerProps {
             <span aria-hidden="true" className="text-[0.55em] text-white">
               ✦
             </span>
-            <span>and some magic</span>
+            <span>{data.title2}</span>
           </span>
         </h1>
       </div>

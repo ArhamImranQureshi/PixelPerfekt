@@ -28,9 +28,9 @@ export default function BrandingPage() {
       <BrandingCTA />
       <BrandingFAQ />
       <BrandingContact /> */}
-      <NewServiceBanner service="web-branding" />
-      <ParallaxImage service="web-branding" />
-    <AboutReveal/>
+      <NewServiceBanner service="branding-design" />
+      <ParallaxImage service="branding-design" />
+    <AboutReveal service="branding-design"/>
     <FeaturedProjects/>
     <Portfolio 
         singleCategory="Branding" 
