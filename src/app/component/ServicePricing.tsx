@@ -4,80 +4,41 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Check, ArrowUpRight } from "lucide-react";
-
+import { servicesData } from "@/data/service";
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
-
+interface PricingSectionProps {
+  service:
+    | "branding-design"
+    | "web-development"
+    | "app-development"
+    | "content-writing"
+    | "social-media-marketing"
+    | "seo-services";
+}
 interface PricingTier {
-  badge?: { label: string; icon: string; color: string };
+  badge?: {
+    label: string;
+    icon: string;
+    color: string;
+  };
   title: string;
   description: string;
   price: string;
   period: string;
   timeline: string;
+
+  button?: {
+    text: string;
+    link: string;
+  };
+
   features: string[];
 }
-const tiers: PricingTier[] = [
-  {
-    badge: { label: "Starter", icon: "🚀", color: "#D4F86A" },
-    title: "Starter",
-    description:
-      "Perfect for startups and small businesses ready to establish their brand identity.",
-    price: "1,999",
-    period: "/project",
-    timeline: "Timeline: tailored to your project",
-    features: [
-      "Brand Strategy Session",
-      "Logo Design (3 concepts)",
-      "Color Palette Selection",
-      "Typography Selection",
-      "Brand Board Presentation",
-      "2 Rounds of Revisions",
-    ],
-  },
-  {
-    badge: { label: "Professional", icon: "🔥", color: "#B084F0" },
-    title: "Professional",
-    description:
-      "Ideal for growing companies seeking a comprehensive visual identity system.",
-    price: "4,999",
-    period: "/project",
-    timeline: "Timeline: tailored to your project",
-    features: [
-      "Everything in Starter",
-      "Complete Visual Identity",
-      "Brand Guidelines Document",
-      "Business Card Design",
-      "Social Media Kit",
-      "Stationery Design",
-      "4 Rounds of Revisions",
-      "Source Files Delivery",
-    ],
-  },
-  {
-    badge: { label: "Enterprise", icon: "⭐", color: "#2CB6C0" },
-    title: "Enterprise",
-    description:
-      "For established organizations requiring a full brand ecosystem and rollout.",
-    price: "9,999+",
-    period: "",
-    timeline: "Timeline: based on project scope",
-    features: [
-      "Everything in Professional",
-      "Full Brand Ecosystem",
-      "Comprehensive Brand Book",
-      "Website UI Kit",
-      "Marketing Collateral",
-      "Brand Training Session",
-      "Unlimited Revisions",
-      "Priority Support (6 months)",
-      "Dedicated Project Manager",
-    ],
-  },
-];
 
-export function PricingSection() {
+export default function PricingSection({ service }: TypesofServicesProps) {
+  const data = servicesData[service].pricing;
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const glowRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -106,7 +67,7 @@ export function PricingSection() {
             trigger: containerRef.current,
             start: "top 75%",
           },
-        }
+        },
       );
 
       // Feature list stagger reveal
@@ -126,7 +87,7 @@ export function PricingSection() {
               trigger: containerRef.current,
               start: "top 75%",
             },
-          }
+          },
         );
       }
     });
@@ -161,7 +122,7 @@ export function PricingSection() {
 
   const handleMouseMove = (
     e: React.MouseEvent<HTMLDivElement>,
-    index: number
+    index: number,
   ) => {
     const card = cardsRef.current[index];
     const setters = quickSetters.current[index];
@@ -176,8 +137,8 @@ export function PricingSection() {
     setters.y(Math.round((py / rect.height) * 100) as unknown as number);
 
     // subtle 3D tilt
-    const rotateY = ((px / rect.width) - 0.5) * 8;
-    const rotateX = ((py / rect.height) - 0.5) * -8;
+    const rotateY = (px / rect.width - 0.5) * 8;
+    const rotateX = (py / rect.height - 0.5) * -8;
     setters.ry(rotateY as unknown as number);
     setters.rx(rotateX as unknown as number);
   };
@@ -221,7 +182,7 @@ export function PricingSection() {
           className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch"
           style={{ perspective: "1200px" }}
         >
-          {tiers.map((tier, index) => (
+          {data.plans.map((tier, index) => (
             <div
               key={tier.title}
               ref={(el) => {
@@ -252,7 +213,10 @@ export function PricingSection() {
               {/* Animated gradient border sheen on hover */}
               <div className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-transparent via-[#2CB6C0]/20 to-transparent bg-[length:200%_100%] animate-[shimmer_2.5s_linear_infinite]" />
 
-              <div className="relative z-10 flex flex-col flex-1" style={{ transform: "translateZ(30px)" }}>
+              <div
+                className="relative z-10 flex flex-col flex-1"
+                style={{ transform: "translateZ(30px)" }}
+              >
                 {tier.badge && (
                   <span
                     className="inline-flex items-center gap-1.5 self-start rounded-full px-4 py-1.5 text-sm font-semibold text-black mb-6 transition-transform duration-300 group-hover:scale-105"
@@ -268,13 +232,17 @@ export function PricingSection() {
                 </h3>
 
                 {tier.description && (
-                  <p className="text-gray-400 text-sm mb-6">{tier.description}</p>
+                  <p className="text-gray-400 text-sm mb-6">
+                    {tier.description}
+                  </p>
                 )}
 
                 {tier.price && (
                   <div className="mb-2">
                     <div className="flex items-start gap-1">
-                      <span className="text-lg font-bold text-white mt-2">$</span>
+                      <span className="text-lg font-bold text-white mt-2">
+                        $
+                      </span>
                       <span className="text-5xl font-extrabold text-white leading-none">
                         {tier.price}
                       </span>
@@ -282,15 +250,23 @@ export function PricingSection() {
                         {tier.period}
                       </span>
                     </div>
-                    <p className="text-gray-500 text-sm mt-2">{tier.timeline}</p>
+                    <p className="text-gray-500 text-sm mt-2">
+                      {tier.timeline}
+                    </p>
                   </div>
                 )}
 
                 <div className={tier.price ? "mt-6" : "mt-2"}>
-                  <button className="relative w-full overflow-hidden rounded-full bg-white text-black font-semibold py-3.5 px-6 flex items-center justify-between transition-colors duration-300 hover:bg-[#2CB6C0]">
-                    <span className="relative z-10">Start Project</span>
+                  <a
+                    href={tier.button?.link || "/contact"}
+                    className="relative w-full overflow-hidden rounded-full bg-white text-black font-semibold py-3.5 px-6 flex items-center justify-between transition-colors duration-300 hover:bg-[#2CB6C0]"
+                  >
+                    <span className="relative z-10">
+                      {tier.button?.text || "Start Project"}
+                    </span>
+
                     <ArrowUpRight className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </button>
+                  </a>
                 </div>
 
                 <div className="w-full h-px bg-[#2a2a2a] my-8 relative overflow-hidden">

@@ -1,5 +1,5 @@
 "use client";
-
+import { servicesData } from "@/data/service";
 import { useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
@@ -10,54 +10,20 @@ interface ApproachItem {
   description: string;
   image: string;
 }
+interface TypesofServicesProps {
+  service:
+    | "branding-design"
+    | "web-development"
+    | "app-development"
+    | "content-writing"
+    | "social-media-marketing"
+    | "seo-services";
+}
 
-const items: ApproachItem[] = [
-  {
-    id: "perfection",
-    title: "Perfection",
-    description:
-      "From pixel-perfect designs to flawless code, every aspect of our projects is crafted with care to ensure the highest standards of quality.",
-    image:
-      "https://demo.oceanthemes.site/rayo-dark/wp-content/uploads/sites/15/2025/10/h70_appr-01.webp",
-  },
-  {
-    id: "innovative",
-    title: "Innovative",
-    description:
-      "I stay ahead of design trends, offering modern and visually impactful solutions that set your brand apart.",
-    image:
-      "https://demo.oceanthemes.site/rayo-dark/wp-content/uploads/sites/15/2025/10/h70_appr-02.webp",
-  },
-  {
-    id: "expertise",
-    title: "Expertise",
-    description:
-      "I am passionate about integrating the latest technologies and trends, including interactive animations and mobile-first strategies.",
-    image:
-      "https://demo.oceanthemes.site/rayo-dark/wp-content/uploads/sites/15/2025/10/h70_appr-03.webp",
-  },
-  {
-    id: "full-cycle",
-    title: "Full-Cycle services",
-    description:
-      "From web design to development, branding, SEO, and UX/UI, we provide a full range of services that cover all your digital needs.",
-    image:
-      "https://demo.oceanthemes.site/rayo-dark/wp-content/uploads/sites/15/2025/10/200x200_obj-menu-04.webp",
-  },
-  {
-    id: "client-success",
-    title: "Client Success",
-    description:
-      "Our clients consistently see improved engagement, conversion rates, and business growth.",
-    image:
-      "https://demo.oceanthemes.site/rayo-dark/wp-content/uploads/sites/15/2025/10/200x200_obj-menu-01.webp",
-  },
-];
-
-export default function TypesofServices() {
+export default function TypesofServices({ service }: TypesofServicesProps) {
   const listRef = useRef<HTMLDivElement>(null);
   const rowRefs = useRef<Array<HTMLDivElement | null>>([]);
-
+  const data = servicesData[service].approach;
   const handleEnter = (index: number) => {
     rowRefs.current.forEach((row, i) => {
       if (!row) return;
@@ -125,41 +91,19 @@ export default function TypesofServices() {
   };
 
   return (
-    <section className="relative bg-[#0a0a0a] text-white w-full px-6 md:px-16 py-10">
+    <section className="relative bg-[#0a0a0a] text-white w-full px-6 md:px-16 py-[100px]">
       {/* Top bar */}
       <div className="flex items-start justify-between mb-16 md:mb-24">
         <h1 className="text-4xl md:text-6xl font-bold leading-[1.05] max-w-xl">
-          Approach and
+          {data.title1}
           <br />
-          philosophy
+          {data.title2}
         </h1>
-
-        <nav className="hidden md:flex flex-col gap-1 text-gray-400 text-base pt-2">
-          <span>Design</span>
-          <span>Development</span>
-          <span>Mastership</span>
-        </nav>
-
-        <div className="flex items-center gap-4">
-          <button className="rounded-full border border-white/70 px-5 py-2.5 text-sm font-medium flex items-center gap-2 hover:bg-white hover:text-black transition-colors">
-            Let&apos;s Chat
-            <span className="inline-block rotate-45">&#8594;</span>
-          </button>
-          <button
-            aria-label="Open menu"
-            className="w-11 h-11 rounded-full bg-white text-black flex items-center justify-center"
-          >
-            <div className="flex flex-col gap-1">
-              <span className="block w-4 h-[2px] bg-black" />
-              <span className="block w-4 h-[2px] bg-black" />
-            </div>
-          </button>
-        </div>
       </div>
 
       {/* List */}
       <div ref={listRef}>
-        {items.map((item, i) => (
+        {data.items.map((item, i) => (
           <div
             key={item.id}
             ref={(el) => {

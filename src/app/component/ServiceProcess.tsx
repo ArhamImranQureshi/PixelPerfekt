@@ -1,5 +1,5 @@
 "use client";
-
+import { servicesData } from "@/data/service";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
@@ -9,7 +9,15 @@ import { ArrowUpRight } from "lucide-react";
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
-
+interface StackingCardsProps {
+  service:
+    | "branding-design"
+    | "web-development"
+    | "app-development"
+    | "content-writing"
+    | "social-media-marketing"
+    | "seo";
+}
 interface StackCard {
   id: string;
   step: string;
@@ -63,12 +71,14 @@ const cards: StackCard[] = [
   },
 ];
 
-export default function StackingCards() {
+export default function StackingCards({
+  service,
+}: StackingCardsProps) {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const scrollWrapperRef = useRef<HTMLDivElement | null>(null);
   const pinContainerRef = useRef<HTMLDivElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
+  const data = servicesData[service].stackingCards;
   useEffect(() => {
     const ctx = gsap.context(() => {
       const wrapper = scrollWrapperRef.current;
@@ -135,7 +145,7 @@ export default function StackingCards() {
           ref={pinContainerRef}
           className="relative flex h-screen w-full items-center justify-center overflow-hidden"
         >
-          {cards.map((card, index) => (
+          {data.cards.map((card, index) => (
             <div
               key={card.id}
               ref={(el) => {

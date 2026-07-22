@@ -6,9 +6,9 @@ import FeaturedProjects from "@/app/component/FeaturedProjects";
 import Portfolio from "@/app/portfolio/page";
 import StackingCards from "@/app/component/ServiceProcess";
 import TypesofServices from "@/app/component/ServicesTypes";
-import { PricingSection } from "@/app/component/ServicePricing";
 import ContactSection from "@/components/CTA";
 import FAQSection from "@/app/component/FAQ's";
+import PricingSection from "@/app/component/ServicePricing";
 export const metadata: Metadata = {
   title: "Branding Services | Pixel Perfekt Solutions",
   description: "Transform your business with our comprehensive branding services. We specialize in brand strategy, visual identity, and brand guidelines.",
@@ -37,9 +37,9 @@ export default function BrandingPage() {
         hideTabs={true} 
         showHeader={true} // Agar title "You should believe we made it well" dikhana hai, nahi to false kar dein
       />
-    <StackingCards/>
-    <TypesofServices/>
-    <PricingSection/>
+    <StackingCards service="branding-design"/>
+    <TypesofServices service="branding-design"/>
+    <PricingSection service="branding-design"/>
     <FAQSection/>
     <ContactSection/>
     </main>
