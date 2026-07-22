@@ -1,43 +1,25 @@
 "use client";
-
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
+import { servicesData } from "@/data/service";
+interface FeaturedProjectsProps {
+  service:
+    | "branding-design"
+    | "web-development"
+    | "app-development"
+    | "content-writing"
+    | "social-media-marketing"
+    | "seo";
+}
 gsap.registerPlugin(ScrollTrigger);
 
-const portfolioItems = [
-  {
-    title: "Interactive concept",
-    subtitle: "powered by AI",
-    tags: ["Sora", "AI", "Editorial"],
-    image: "/images/banner_ (1).webp",
-  },
-  {
-    title: "Brand identity",
-    subtitle: "for startups",
-    tags: ["Branding", "UI/UX"],
-    image: "/images/banner_ (2).webp",
-  },
-  {
-    title: "Creative website",
-    subtitle: "development",
-    tags: ["Next.js", "GSAP"],
-    image: "/images/banner_ (1).jpg",
-  },
-  {
-    title: "Mobile App",
-    subtitle: "experience",
-    tags: ["React Native", "App"],
-    image: "/images/banner_ (2).jpg",
-  },
-];
-
-export default function FeaturedProjects() {
+export default function FeaturedProjects({ service }: FeaturedProjectsProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
+  const data = servicesData[service].featuredProjects;
   useEffect(() => {
     const ctx = gsap.context(() => {
       cardsRef.current.forEach((card) => {
@@ -60,38 +42,30 @@ export default function FeaturedProjects() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="bg-[#151515] py-28"
-    >
+    <section ref={sectionRef} className="bg-[#151515] py-28">
       <div className="max-w-[1700px] mx-auto px-6 lg:px-10">
-
         <div className="grid lg:grid-cols-2 gap-20">
-
           {/* LEFT */}
           <div className="lg:sticky lg:top-24 h-fit">
-
             <h2 className="text-white font-semibold leading-[0.95] text-5xl md:text-7xl">
-              Featured
-              <br />
-              projects
+              {data.title}
             </h2>
 
             <p className="text-gray-400 mt-8 text-lg max-w-md leading-8">
-              Explore a selection of projects blending creativity with practical
-              design.
+              {data.description}
             </p>
 
-            <button className="mt-10 px-8 py-4 rounded-full border border-white text-white hover:bg-white hover:text-black duration-300">
-              All Works →
-            </button>
-
+            <Link
+              href={data.button.link}
+              className="inline-flex mt-10 px-8 py-4 rounded-full border border-white text-white hover:bg-white hover:text-black duration-300"
+            >
+              {data.button.text}
+            </Link>
           </div>
 
           {/* RIGHT */}
           <div className="space-y-24">
-
-            {portfolioItems.map((item, index) => (
+            {data.projects.map((item, index) => (
               <div
                 key={index}
                 ref={(el) => {
@@ -101,7 +75,6 @@ export default function FeaturedProjects() {
                 {/* IMAGE */}
 
                 <div className="group relative aspect-[4/3] overflow-hidden rounded-[40px] cursor-pointer">
-
                   <Image
                     src={item.image}
                     alt={item.title}
@@ -110,7 +83,6 @@ export default function FeaturedProjects() {
                   />
 
                   <div className="absolute bottom-6 left-6 flex gap-3">
-
                     {item.tags.map((tag) => (
                       <span
                         key={tag}
@@ -119,35 +91,25 @@ export default function FeaturedProjects() {
                         {tag}
                       </span>
                     ))}
-
                   </div>
-
                 </div>
 
                 {/* TEXT */}
 
                 <div className="mt-7">
-
                   <h3 className="text-white text-4xl font-medium">
-
                     {item.title}
 
                     <span className="text-gray-500 font-normal">
                       {" "}
                       {item.subtitle}
                     </span>
-
                   </h3>
-
                 </div>
-
               </div>
             ))}
-
           </div>
-
         </div>
-
       </div>
     </section>
   );

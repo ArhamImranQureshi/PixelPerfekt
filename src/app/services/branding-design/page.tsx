@@ -31,7 +31,7 @@ export default function BrandingPage() {
       <NewServiceBanner service="branding-design" />
       <ParallaxImage service="branding-design" />
     <AboutReveal service="branding-design"/>
-    <FeaturedProjects/>
+    <FeaturedProjects service="branding-design"/>
     <Portfolio 
         singleCategory="Branding" 
         hideTabs={true} 

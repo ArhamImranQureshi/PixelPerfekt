@@ -60,28 +60,28 @@ export const servicesData = {
         {
           title: "Interactive concept",
           subtitle: "powered by AI",
-          image: "",
+          image: "/images/banner_ (1).webp",
           tags: ["Sora", "AI", "Editorial"],
         },
 
         {
           title: "Brand identity",
           subtitle: "for startups",
-          image: "",
+          image: "/images/banner_ (2).webp",
           tags: ["Branding", "UI/UX"],
         },
 
         {
           title: "Creative website",
           subtitle: "development",
-          image: "",
+          image: "/images/banner_ (1).jpg",
           tags: ["Next.js", "GSAP"],
         },
 
         {
           title: "Mobile App",
           subtitle: "experience",
-          image: "",
+          image: "/images/banner_ (2).jpg",
           tags: ["React Native", "App"],
         },
       ],
